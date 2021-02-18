@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+ 
+{% block snippet %}
+ <p> <br> </p>
+ {% for span_portion in span_portions %}
+  {% if span_portion ==  entity%}
+   <mark>{{ span_portion }}</mark>
+  {% else %}
+   {{ span_portion }}
+  {% endif %}
+ {% endfor %}
+{% endblock %}
+
+{% block question %}
+ <p> <br> </p>
+ <p style="text-indent: 100px"><b>Does the snippet appear to be spam?</b></p>
+ <p style="text-indent: 110px">- Doesn't express a coherent thought</p>
+ <p style="text-indent: 110px">- Isn't actually about {{ entity }}</p>
+ <p style="text-indent: 110px">- Looks like an ad</p>
+ <p style="text-indent: 110px">- Something said *by* {{ entity }} without naming the speaker</p>
+ <p style="text-indent: 110px">- A quote by a(n) {{ entity }} spokesperson</p>
+ <p style="text-indent: 110px">- Primarily focused on {{ entity }}'s stock price</p>
+ <p style="text-indent: 110px">- A listing for a product *non directly made by* {{ entity }}</p>
+ <p style="text-indent: 110px">- A question being asked about {{ entity }}</p>
+{% endblock %}
+
+{% block submission %}
+ <form action="/spam/" method="post">
+  {% csrf_token %}
+  {{ spam_form }}
+  <input type="submit" value="Submit">
+ </form>
+{% endblock %}
