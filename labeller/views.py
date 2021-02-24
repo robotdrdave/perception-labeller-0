@@ -11,24 +11,11 @@ from .utils import extract_entity, select_snippet_to_evaluate, validate_user
 
 def spam(request):
     validate_user(request.user.id)
-    
-    try:
-        snippet_to_evaluate = select_snippet_to_evaluate(Snippet, Evaluated_Snippet)
-    except:
-        return HttpResponseRedirect('/out_of_samples/')
-
-    span_portions = extract_entity(Snippet.objects.get(id=snippet_to_evaluate).text, 
-                                    Snippet.objects.get(id=snippet_to_evaluate).entity)
-
-    context = {'entity': Snippet.objects.get(id=snippet_to_evaluate).entity,
-               'span_portions': span_portions}
-
-    request.session['context'] = {'entity': Snippet.objects.get(id=snippet_to_evaluate).entity,
-                                    'span_portions': span_portions}
 
     if request.method == 'POST':
         spam_form = SpamForm(request.POST)
         if spam_form.is_valid():
+            snippet_to_evaluate = request.session.get('context')['snippet_to_evaluate']
             if spam_form.data['field'] == 'True':
                 Evaluated_Snippet(evaluator = request.user,
                 snippet = Snippet.objects.get(id=snippet_to_evaluate),
@@ -48,9 +35,25 @@ def spam(request):
                 extracted_span = '',
                 is_spam = False)
                 current_snippet.save()
-                request.session['context']['current_snippet_id'] = current_snippet.id
+                request.session['current_snippet_id'] = current_snippet.id
+                f = open("context.txt", "a")
+                f.write('\n' + str(request.session.get('context')))
+                f.close()
                 return HttpResponseRedirect('/harmful/')
     else:
+        try:
+            snippet_to_evaluate = select_snippet_to_evaluate(Snippet, Evaluated_Snippet, request.user)
+        except:
+            return HttpResponseRedirect('/out_of_samples/')
+
+        span_portions = extract_entity(Snippet.objects.get(id=snippet_to_evaluate).text, 
+                                    Snippet.objects.get(id=snippet_to_evaluate).entity)
+
+        context = {'entity': Snippet.objects.get(id=snippet_to_evaluate).entity,
+               'span_portions': span_portions}
+
+        request.session['context'] = {'entity': Snippet.objects.get(id=snippet_to_evaluate).entity,
+                                    'span_portions': span_portions, 'snippet_to_evaluate': snippet_to_evaluate}
         spam_form = SpamForm()
         context['spam_form'] = spam_form 
         return render(request, "spam.html", context)
@@ -59,7 +62,10 @@ def harmful(request):
     validate_user(request.user.id)
     
     context = request.session.get('context')
-    current_snippet = Evaluated_Snippet.objects.get(id=context['current_snippet_id'])
+    f = open("context.txt", "a")
+    f.write('\n' + str(context))
+    f.close()
+    current_snippet = Evaluated_Snippet.objects.get(id=request.session.get('current_snippet_id'))
 
     if request.method == 'POST':
         harm_form = YNForm(request.POST)
@@ -85,7 +91,7 @@ def opinion(request):
     validate_user(request.user.id)
 
     context = request.session.get('context')
-    current_snippet = Evaluated_Snippet.objects.get(id=context['current_snippet_id'])
+    current_snippet = Evaluated_Snippet.objects.get(id=request.session.get('current_snippet_id'))
     
     if request.method == 'POST':
         text_form = OpinionForm(request.POST)
@@ -112,7 +118,7 @@ def fact(request):
     validate_user(request.user.id)
 
     context = request.session.get('context')
-    current_snippet = Evaluated_Snippet.objects.get(id=context['current_snippet_id'])
+    current_snippet = Evaluated_Snippet.objects.get(id=request.session.get('current_snippet_id'))
 
     if request.method == 'POST':
         text_form = FactForm(request.POST)
@@ -139,7 +145,7 @@ def product_mention(request):
     validate_user(request.user.id)
 
     context = request.session.get('context')
-    current_snippet = Evaluated_Snippet.objects.get(id=context['current_snippet_id'])
+    current_snippet = Evaluated_Snippet.objects.get(id=request.session.get('current_snippet_id'))
 
     if request.method == 'POST':
         text_form = ProductForm(request.POST)
@@ -166,7 +172,7 @@ def out_of_samples(request):
     validate_user(request.user.id)
 
     try:
-        select_snippet_to_evaluate(Snippet, Evaluated_Snippet)
+        select_snippet_to_evaluate(Snippet, Evaluated_Snippet, request.user)
         return render(request, "spam.html")
     except:
         return render(request, "out_of_samples.html")

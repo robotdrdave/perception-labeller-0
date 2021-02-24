@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 
 LOGIN_REDIRECT_URL = 'spam'
 
+LOGOUT_REDIRECT_URL = 'logout'
+
 # Application definition
 
 INSTALLED_APPS = [

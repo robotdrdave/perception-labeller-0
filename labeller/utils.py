@@ -14,9 +14,9 @@ def extract_entity(span, entity):
     isolated_span_portions.append(span[previous_index:])
     return isolated_span_portions
 
-def select_snippet_to_evaluate(Snippet, Evaluated_Snippet):
+def select_snippet_to_evaluate(Snippet, Evaluated_Snippet, user):
     snippets = set([s_id.id for s_id in Snippet.objects.all()])
-    evaluated_snippets = set([s.snippet.id for s in Evaluated_Snippet.objects.all()])
+    evaluated_snippets = set([s.snippet.id for s in Evaluated_Snippet.objects.all() if s.evaluator == user])
     return random.choice(list(snippets.difference(evaluated_snippets)))
 
 def validate_user(user_id):

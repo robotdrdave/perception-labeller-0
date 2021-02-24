@@ -18,8 +18,7 @@ import labeller.views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    #path("", labeller.views.login, name='login'),
-    #path("logout", auth_views.LogoutView.as_view(), name='logout'),
+    #path("logout", labeller.views.logout, name='logout'),
     path("spam/", labeller.views.spam, name="spam"),
     path("harmful/", labeller.views.harmful, name="harmful"),
     path("opinion/", labeller.views.opinion, name="opinion"),
