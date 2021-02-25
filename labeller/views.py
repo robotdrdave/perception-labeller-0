@@ -19,6 +19,7 @@ def spam(request):
             if spam_form.data['field'] == 'True':
                 Evaluated_Snippet(evaluator = request.user,
                 snippet = Snippet.objects.get(id=snippet_to_evaluate),
+                entity = Snippet.objects.get(id=snippet_to_evaluate).entity,
                 is_harmful = False,
                 is_opinion = False,
                 is_fact = False,
@@ -29,6 +30,7 @@ def spam(request):
             else:
                 current_snippet = Evaluated_Snippet(evaluator = request.user,
                 snippet = Snippet.objects.get(id=snippet_to_evaluate),
+                entity = Snippet.objects.get(id=snippet_to_evaluate).entity,
                 is_harmful = False,
                 is_opinion = False,
                 is_fact = False,
