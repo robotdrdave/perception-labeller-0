@@ -29,7 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-LOGIN_REDIRECT_URL = 'spam'
+LOGIN_REDIRECT_URL = '/spam'
 
 LOGOUT_REDIRECT_URL = 'logout'
 

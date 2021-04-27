@@ -25,3 +25,21 @@ class ProductForm(forms.Form):
                                    choices=((False, 'No'), (True, 'Yes')))
     text_field = forms.CharField(label='If yes, What is the product or service mentioned?', required=False, 
                                  widget=forms.TextInput(attrs={'size':80}))
+
+class Y_OpinionForm(forms.Form):
+    yn_field = forms.TypedChoiceField(label='Answer', coerce=lambda x: x =='True', 
+                                   choices=((True, 'Yes'), (False, 'No')))
+    text_field = forms.CharField(label='If yes, What is the subjective span of text?', required=True, 
+                                 widget=forms.TextInput(attrs={'size':80}))
+
+class Y_FactForm(forms.Form):
+    yn_field = forms.TypedChoiceField(label='Answer', coerce=lambda x: x =='True', 
+                                   choices=((True, 'Yes'), (False, 'No')))
+    text_field = forms.CharField(label='If yes, What is the objective span of text?', required=True, 
+                                 widget=forms.TextInput(attrs={'size':80}))
+
+class Y_ProductForm(forms.Form):
+    yn_field = forms.TypedChoiceField(label='Answer', coerce=lambda x: x =='True', 
+                                   choices=((True, 'Yes'), (False, 'No')))
+    text_field = forms.CharField(label='If yes, What is the product or service mentioned?', required=True, 
+                                 widget=forms.TextInput(attrs={'size':80}))
