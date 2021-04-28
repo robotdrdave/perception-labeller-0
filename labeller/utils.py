@@ -2,6 +2,7 @@ import re
 import random
 from .models import User
 from django.http import HttpResponseRedirect
+from django.shortcuts import render
 
 def extract_entity(span, entity):
     locations = [m.start() for m in re.finditer(entity.lower(), span.lower())]
@@ -28,4 +29,20 @@ def validate_user(user_id):
     if user_id not in [user.id for user in User.objects.all()]:
         return HttpResponseRedirect('/accounts/login')
 
-    
+def delete_previous_label(Evaluated_Snippet, user, view):
+    f = open("context.txt", "a")
+    f.write("\n")
+    f.write(view)
+    f.close()
+    if view in ['spam', 'out_of_samples']:
+        previous_evaluated_snippet_id = max([s.id for s in Evaluated_Snippet.objects.all() if s.evaluator == user])
+        previous_snippet_id = Evaluated_Snippet.objects.get(id=previous_evaluated_snippet_id).snippet.id
+        Evaluated_Snippet.objects.get(id=previous_evaluated_snippet_id).delete()
+        return HttpResponseRedirect('/spam')
+    elif view == 'opinion':
+        
+        return HttpResponseRedirect('/spam')
+    elif view == 'fact':
+        return HttpResponseRedirect('/opinion')
+    elif view == 'product_mention':
+        return HttpResponseRedirect('/fact')

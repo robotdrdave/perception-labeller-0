@@ -28,3 +28,11 @@
 {'entity': 'edf', 'span_portions': ['British Gas said it would charge £120 and ', 'edf', ' said it would charge £80.'], 'snippet_to_evaluate': 8, 'current_count': 12, 'total_snippets': 50}
 {'entity': 'edf', 'span_portions': ['', 'edf', ' Energy Extends Panel as Coronavirus Halts Review Process\n\n Slaughters,'], 'snippet_to_evaluate': 10, 'current_count': 13, 'total_snippets': 50}
 {'entity': 'etoro', 'span_portions': ['Volumes across all cryptos on ', 'etoro', '’s trading platform doubled from their levels a week prior, both globally and in China and Hong Kong,” he added. \n\n'], 'snippet_to_evaluate': 11, 'current_count': 14, 'total_snippets': 50}
+spam
+spam
+spam
+fact
+Here
+opinion
+spam
+spam

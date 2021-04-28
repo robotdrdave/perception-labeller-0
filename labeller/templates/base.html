@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>{% block title %}Perception Labelling{% endblock %}</title>
+    
   </head>
   <body>
     {% if user.is_authenticated %}
@@ -23,6 +24,13 @@
       
       {% block submission %}
       {% endblock %}
+
+      {% block correction %}
+      {% endblock %}
+
+
     </div>
+    
+
   </body>
 </html>

@@ -17,7 +17,7 @@ class Evaluated_Snippet(models.Model):
     is_opinion = models.BooleanField(default=False)
     is_fact = models.BooleanField(default=False)
     product_mention = models.BooleanField(default=False)
-    extracted_span = models.TextField()
+    extracted_span = models.TextField(default='')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(null=True)
 

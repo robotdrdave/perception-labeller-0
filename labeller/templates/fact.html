@@ -27,3 +27,29 @@
   <input type="submit" value="Submit">
  </form>
 {% endblock %}
+
+{% block correction %}
+ <style>
+  .button {
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 40px 20px;
+      cursor: pointer;
+    }
+    
+  .correction_fact {background-color: #FF0000;} /* red */
+ </style>
+ <p></p>
+ <p></p>
+ <p></p>
+ <form action="/fact/" method="post">
+   {% csrf_token %}
+   <button class = "button correction_fact" type="submit" name='correction_fact' value={{correction_fact}}>Correct Previous Label</button>
+ </form>
+
+{% endblock %} 
