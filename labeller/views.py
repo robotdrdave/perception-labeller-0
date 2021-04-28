@@ -64,9 +64,6 @@ def opinion(request):
     
     if request.method == 'POST':
         if 'correction_opinion' in request.POST:
-            f = open("context.txt", "a")
-            f.write("\nHere")
-            f.close()
             return delete_previous_label(Evaluated_Snippet, request.user, 'opinion')
         else:
             text_form = OpinionForm(request.POST)

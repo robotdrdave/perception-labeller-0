@@ -30,10 +30,6 @@ def validate_user(user_id):
         return HttpResponseRedirect('/accounts/login')
 
 def delete_previous_label(Evaluated_Snippet, user, view):
-    f = open("context.txt", "a")
-    f.write("\n")
-    f.write(view)
-    f.close()
     if view in ['spam', 'out_of_samples']:
         previous_evaluated_snippet_id = max([s.id for s in Evaluated_Snippet.objects.all() if s.evaluator == user])
         previous_snippet_id = Evaluated_Snippet.objects.get(id=previous_evaluated_snippet_id).snippet.id
