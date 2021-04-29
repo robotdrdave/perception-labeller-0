@@ -3,7 +3,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, logout as django_logout
 from django.contrib.auth.decorators import login_required
 import requests
-import random
 
 from .models import Snippet, Evaluated_Snippet, User
 from .forms import SpamForm, YNForm, OpinionForm, Y_OpinionForm, FactForm, Y_FactForm, ProductForm, Y_ProductForm
